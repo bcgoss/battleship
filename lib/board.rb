@@ -1,3 +1,4 @@
+require './lib/location'
 class Board
   attr_reader :location,
               :size
@@ -11,9 +12,10 @@ class Board
     end
     set_board(size)
   end
+
   def location(target)
-    state = @location[target.downcase]
-    state || "out_of_bounds"
+    target_location = @location[target.downcase]
+    target_location == nil ? "out of bounds" : target_location.state
   end
 
   def set_board(size)
@@ -21,7 +23,7 @@ class Board
     number = "1"
     size.times do
       size.times do
-        @location["#{letter}#{number}"] = "empty"
+        @location["#{letter}#{number}"] = Location.new
         number = number.next
       end
       number = "1"

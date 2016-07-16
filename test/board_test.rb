@@ -30,7 +30,7 @@ class BoardTest < Minitest::Test
 
   def test_it_handles_out_of_bounds
     board= Board.new
-    assert_equal "out_of_bounds", board.location("M13")
+    assert_equal "out of bounds", board.location("M13")
   end
 
 end
