@@ -5,4 +5,15 @@ class LocationTest < Minitest::Test
   def test_locations_exist
     assert Location.new
   end
+
+  def test_locations_start_empty
+    assert_equal "empty", Location.new.state
+  end
+
+  def test_locations_can_hold_ships
+    location = Location.new
+    location.add_ship
+
+    assert_equal "ship", location.state
+  end
 end
