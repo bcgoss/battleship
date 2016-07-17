@@ -1,7 +1,6 @@
 require './lib/location'
 class Board
-  attr_reader :location,
-              :size
+  attr_reader :size
   def initialize(difficulty = "easy")
     @location= Hash.new
     @size = case difficulty

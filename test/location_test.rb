@@ -16,4 +16,16 @@ class LocationTest < Minitest::Test
 
     assert_equal "ship", location.state
   end
+
+  def test_location_records_a_hit
+    location = Location.new
+    location.record_hit
+    assert_equal "hit", location.state
+  end
+
+  def test_location_records_a_miss
+    location = Location.new
+    location.record_miss
+    assert_equal "miss", location.state
+  end
 end

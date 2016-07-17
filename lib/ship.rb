@@ -16,6 +16,6 @@ class Ship
   def hit
     @hits += 1
 
-    size > hits ? hits : "sunk"
+    size > hits ? "hit" : "sunk"
   end
 end

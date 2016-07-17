@@ -16,7 +16,7 @@ class ShipTest < Minitest::Test
 
   def test_ships_count_hits
     submarine = Ship.new("","")
-    assert_equal 1, submarine.hit
+    assert_equal "hit", submarine.hit
   end
   def test_ships_sink_after_too_many_hits
     submarine = Ship.new('','')

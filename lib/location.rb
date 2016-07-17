@@ -7,4 +7,12 @@ class Location
   def add_ship
     @state = "ship"
   end
+
+  def record_hit
+    @state = "hit"
+  end
+
+  def record_miss
+    @state = "miss"
+  end
 end
