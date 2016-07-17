@@ -7,7 +7,6 @@ class Board
     when "easy" then 4
     when "medium" then 8
     when "hard" then 12
-    else return nil
     end
     set_board(size)
   end
