@@ -11,9 +11,16 @@ class Board
     set_board(size)
   end
 
-  def location(target)
+  def check_location(target)
     target_location = @location[target.downcase]
     target_location == nil ? "out of bounds" : target_location.state
+  end
+  def set_location(target, state)
+    if state == "hit"
+      @location[target].record_hit
+    elsif state == "miss"
+      @location[target].record_miss
+    end
   end
 
   def set_board(size)

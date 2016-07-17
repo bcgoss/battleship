@@ -13,7 +13,8 @@ class PlayerTest < Minitest::Test
 
   def test_it_can_guess_locations
     player1 = Player.new
-    player.guess_location("a1")
-    
+    result = player1.guess_location("a1")
+
+    assert_equal 'miss', result
   end
 end
