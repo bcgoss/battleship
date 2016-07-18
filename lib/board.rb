@@ -90,13 +90,13 @@ class Board
     row_limits << get_row_index(ending).ord
 
     row_limits.sort!
-    
+
     if row_limits[0] == row_limits[1]
       return starting
     end
 
     range = (row_limits[0]..row_limits[1]).map do |row|
-        coordinate_builder(row,column)
+        coordinate_builder((row).chr,column)
       end
     return range
   end

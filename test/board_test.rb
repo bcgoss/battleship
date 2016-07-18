@@ -54,8 +54,10 @@ class BoardTest < Minitest::Test
 
   def test_it_finds_range_of_locations
     board = Board.new
-    range = board.get_location_range("a1", "a2")
-    assert_equal ["a1","a2"], range
+    assert_equal ["a1","a2"], board.get_location_range("a1", "a2")
+    assert_equal ["a1","b1"], board.get_location_range("a1","b1")
+    assert_equal ["a1","b1","c1"], board.get_location_range("a1", "c1")
+    assert_equal ["a1","a2","a3"], board.get_location_range("a1","a3")
   end
 
   def test_it_calculates_row_distance
