@@ -12,14 +12,18 @@ class PlayerTest < Minitest::Test
     assert_equal 1, player1.ships.count
   end
 
-  def test_players_cannot_break_rules
-    
+  def placed_ships_cannot_cross
+    player1 = Player.new
+    player1.place_ship("a1","a2")
+    player1.place_ship("a1", "b1")
+    assert_equal 1, player1.ships.count
   end
 
   def test_it_can_guess_locations
     player1 = Player.new
-    result = player1.guess_location("a1")
-
-    assert_equal "miss", result
+    assert_equal "miss", player1.guess_location("a1")
+    
+    player1.place_ship("a1","a2")
+    assert_equal "hit", player1.guess_location("a2")
   end
 end

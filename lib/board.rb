@@ -2,7 +2,7 @@ require './lib/location'
 class Board
   attr_reader :size
   def initialize(difficulty = "easy")
-    @location= Hash.new
+    @location = Hash.new
     @size = case difficulty
     when "easy" then 4
     when "medium" then 8
@@ -11,6 +11,22 @@ class Board
     set_board(size)
   end
 
+  def set_board(size)
+    letter = "a"
+    number = "1"
+    size.times do
+      size.times do
+        @location[coordinate_builder(letter,number)] = Location.new
+        number = number.next
+      end
+      number = "1"
+      letter = letter.next
+    end
+  end
+
+  def coordinate_builder(row, column)
+    "#{row}#{column}"
+  end
   def check_location(target)
     target_location = @location[target.downcase]
     target_location == nil ? "out of bounds" : target_location.state
@@ -24,24 +40,11 @@ class Board
     end
   end
 
-  def set_board(size)
-    letter = "a"
-    number = "1"
-    size.times do
-      size.times do
-        @location["#{letter}#{number}"] = Location.new
-        number = number.next
-      end
-      number = "1"
-      letter = letter.next
-    end
+  def get_row_index(coordinates)
+    coordinates.chars.first
   end
-
-  def get_row_index(location)
-    location.chars.first
-  end
-  def get_column_index(location)
-    location.chars[1..-1].join #range from index 1, to last index
+  def get_column_index(coordinates)
+    coordinates.chars[1..-1].join #range from index 1, to last index. a12 => 12
   end
 
   def get_location_range(starting, ending)
@@ -66,20 +69,35 @@ class Board
 
   def get_range_from_row(starting, ending)
     row = get_row_index(starting)
-    starting_column = get_column_index(starting).to_i
-    ending_column = get_column_index(ending).to_i
+    column_limits = [get_column_index(starting).to_i]
+    column_limits << get_column_index(ending).to_i
 
-    if ending_column - starting_column > 0
-      range = (starting_column..ending_column).map do |column|
-        "#{row}#{column}"
-      end
-    elsif starting_column - ending_column > 0
-      range = (ending_column..starting_column).map do |column|
-        "#{row}#{column}"
-      end
-    else
-      return [starting]
+    column_limits.sort!
+
+    if column_limits[0] == column_limits[1]
+      return starting
     end
+
+    range = (column_limits[0] .. column_limits[1]).map do |column|
+      coordinate_builder(row,column)
+    end
+    return range
+  end
+
+  def get_range_from_column(starting, ending)
+    column = get_column_index(starting)
+    row_limits = [get_row_index(starting).ord]
+    row_limits << get_row_index(ending).ord
+
+    row_limits.sort!
+    
+    if row_limits[0] == row_limits[1]
+      return starting
+    end
+
+    range = (row_limits[0]..row_limits[1]).map do |row|
+        coordinate_builder(row,column)
+      end
     return range
   end
 

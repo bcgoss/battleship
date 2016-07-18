@@ -11,6 +11,10 @@ class Player
   def place_ship(starting,ending)
     # if @board.validate_ship_placement(starting,ending)
     #   @ships << Ship.new(starting, ending)
+    #     ship_locaitons = @board.get_location_range(starting, ending)
+    #     ship_locaitons.each do |target|
+    #       @board.location[target].add_ship
+    #     end
     # end
   end
 
@@ -18,8 +22,7 @@ class Player
     location_state = @board.check_location(target)
 
     if location_state == 'ship'
-      ship = find_ship(target)
-      ship.hit
+      find_ship(target).hit
       return @board.set_location(target, "hit")
     elsif location_state == 'empty'
       return @board.set_location(target, "miss")
@@ -27,6 +30,4 @@ class Player
       return "try again, that target is #{location_state}"
     end
   end
-
-
 end
