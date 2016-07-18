@@ -10,6 +10,9 @@ class ShipTest < Minitest::Test
   end
 
   def test_ships_dont_know_the_rules
+    #placement rules are checked before this method is called.
+    #ships don't know how big the board is, so they don't know
+    #which locations are valid.
     submarine = Ship.new("a1","b2")
     assert_equal ["a1","b2"], submarine.locations
   end

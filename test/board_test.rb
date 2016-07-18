@@ -37,4 +37,28 @@ class BoardTest < Minitest::Test
     board = Board.new
     assert_equal "hit", board.set_location("a1", "hit")
   end
+
+  def test_it_can_spot_rows
+    board = Board.new
+    assert_equal "row", board.row_or_column("a1", "a4")
+  end
+
+  def test_it_can_spot_columns
+    board = Board.new
+    assert_equal "column", board.row_or_column("a1", "c1")
+  end
+
+  def test_it_spots_diagonals
+    assert_equal "neither", Board.new.row_or_column("a1", "d4")
+  end
+
+  def test_it_finds_range_of_locations
+    board = Board.new
+    range = board.get_location_range("a1", "a2")
+    assert_equal ["a1","a2"], range
+  end
+
+  def test_it_calculates_row_distance
+    assert_equal 4, Board.new.distance("a1", "a4")
+  end
 end
