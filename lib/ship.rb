@@ -3,14 +3,10 @@ class Ship
               :locations,
               :hits
 
-  def initialize(starting, ending)
-    @locations = assign_locations(starting, ending)
-    @size = locations.count
+  def initialize(range, size)
+    @locations = range
+    @size = size
     @hits = 0
-  end
-
-  def assign_locations(starting, ending)
-    return [starting, ending]
   end
 
   def hit

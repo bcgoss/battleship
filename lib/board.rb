@@ -111,7 +111,25 @@ class Board
     range.count
   end
 
-  def validate_ship_placement(starting, ending)
+  def validate_ship_placement(starting, ending, ship_size)
+    range = get_location_range(starting, ending)
+    valid = true
+    valid = false if row_or_column(starting, ending) == "neither"
+    valid = false unless length?(starting, ending, ship_size)
+    valid = false unless occupied?(range)
+    valid
+  end
+
+  def length?(starting, ending, ship_size)
+    distance(starting, ending) == ship_size
+  end
+
+  def occupied?(range)
+    range.each do |target|
+      if @location[target].ship?
+        return false
+      end
+    end
     true
   end
 end

@@ -64,7 +64,11 @@ class BoardTest < Minitest::Test
     assert_equal 3, Board.new.distance("a1", "c1")
   end
 
-  def test_it_validiates_ship_placement
+  def test_it_can_validiates_ship_placement
     assert_respond_to Board.new, :validate_ship_placement
+  end
+
+  def test_it_checks_length
+    assert Board.new.length?("a1","a2",2)
   end
 end

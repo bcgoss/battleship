@@ -3,19 +3,16 @@ require './lib/player'
 require './lib/ship'
 
 class PlayerTest < Minitest::Test
-  def setup
-    #things go here
-  end
   def test_it_can_place_ships
     player1 = Player.new
-    player1.place_ship("a1","a2")
+    player1.place_ship("a1","a2", 2)
     assert_equal 1, player1.ships.count
   end
 
   def placed_ships_cannot_cross
     player1 = Player.new
-    player1.place_ship("a1","a2")
-    player1.place_ship("a1", "b1")
+    player1.place_ship("a1","a2", 2)
+    player1.place_ship("a1", "b1", 2)
     assert_equal 1, player1.ships.count
   end
 
@@ -23,11 +20,17 @@ class PlayerTest < Minitest::Test
     player1 = Player.new
     assert_equal "miss", player1.guess_location("a1")
 
-    player1.place_ship("a1","a2")
+    player1.place_ship("a1","a2", 2)
     assert_equal "hit", player1.guess_location("a2")
+    expect = "try again, that target is out of bounds"
+    assert_equal expect, player1.guess_location("a12")
   end
 
-  def test_method_place_ship_exists
-    assert_respond_to Player.new, :place_ship
+  def test_players_know_if_a_ship_exists_at_location
+    player = Player.new
+    player.place_ship("a1","a2",2)
+    target_location = "a1"
+    ship = player.find_ship(target_location)
+    assert ship.locations.include?(target_location)
   end
 end
