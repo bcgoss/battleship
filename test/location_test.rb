@@ -28,4 +28,13 @@ class LocationTest < Minitest::Test
     location.record_miss
     assert_equal "miss", location.state
   end
+
+  def test_locations_can_check_for_ships
+    location = Location.new
+
+    refute location.ship?
+    location.add_ship
+    assert location.ship?
+    
+  end
 end

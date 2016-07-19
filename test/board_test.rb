@@ -6,8 +6,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_sets_board_size
-    board = Board.new
-    assert_equal 4, board.set_board(4)
+    assert_equal 4, Board.new.size
   end
 
   def test_has_locations
@@ -62,5 +61,10 @@ class BoardTest < Minitest::Test
 
   def test_it_calculates_row_distance
     assert_equal 4, Board.new.distance("a1", "a4")
+    assert_equal 3, Board.new.distance("a1", "c1")
+  end
+
+  def test_it_validiates_ship_placement
+    assert_respond_to Board.new, :validate_ship_placement
   end
 end

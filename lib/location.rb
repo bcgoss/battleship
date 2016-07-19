@@ -8,6 +8,14 @@ class Location
     @state = "ship"
   end
 
+  def ship?
+    state == "ship"
+  end
+
+  def empty?
+    state == "empty"
+  end
+
   def record_hit
     @state = "hit"
   end

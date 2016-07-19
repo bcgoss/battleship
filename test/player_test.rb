@@ -22,8 +22,12 @@ class PlayerTest < Minitest::Test
   def test_it_can_guess_locations
     player1 = Player.new
     assert_equal "miss", player1.guess_location("a1")
-    
+
     player1.place_ship("a1","a2")
     assert_equal "hit", player1.guess_location("a2")
+  end
+
+  def test_method_place_ship_exists
+    assert_respond_to Player.new, :place_ship
   end
 end
