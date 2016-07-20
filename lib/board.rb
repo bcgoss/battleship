@@ -35,9 +35,9 @@ class Board
   end
 
   def set_location(target, state)
-    if state == "hit"
+    if state == :hit
       @location[target].record_hit
-    elsif state == "miss"
+    elsif state == :miss
       @location[target].record_miss
     end
   end
@@ -56,9 +56,9 @@ class Board
   end
 
   def get_location_range(starting, ending)
-    if row_or_column(starting, ending) == "row"
+    if row_or_column(starting, ending) == :row
       get_range_from_row(starting, ending)
-    elsif row_or_column(starting, ending) == "column"
+    elsif row_or_column(starting, ending) == :column
       get_range_from_column(starting, ending)
     end
   end
@@ -66,12 +66,12 @@ class Board
   def row_or_column(starting, ending)
     if get_row_index(starting) == get_row_index(ending) && \
       get_column_index(starting) != get_column_index(ending)
-      return "row"
+      return :row
     elsif get_row_index(starting) != get_row_index(ending) && \
       get_column_index(starting) == get_column_index(ending)
-      return "column"
+      return :column
     else
-      return "neither"
+      return :neither
     end
   end
 
@@ -114,7 +114,7 @@ class Board
   def validate_ship_placement(starting, ending, ship_size)
     range = get_location_range(starting, ending)
     valid = true
-    valid = false if row_or_column(starting, ending) == "neither"
+    valid = false if row_or_column(starting, ending) == :neither
     valid = false if wrong_length?(starting, ending, ship_size)
     valid = false if occupied?(range)
     valid

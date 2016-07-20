@@ -5,7 +5,8 @@ class Battleship
     puts Messages.menu_message
     response = gets.chomp.downcase
     if response == 'p'
-      Game.start
+      game = Game.new
+      game.start
     elsif response == 'i'
       information
     elsif response == 'q'

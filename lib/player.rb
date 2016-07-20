@@ -1,8 +1,7 @@
 require './lib/ship'
 require './lib/board'
-require './data/constants'
+
 class Player
-  include Constants
   attr_reader :ships
   def initialize(difficulty = "easy")
     @ships = []
@@ -29,11 +28,11 @@ class Player
   def guess_location(target)
     location_state = @board.check_location(target)
 
-    if location_state == ship #result.is_a_ship?
+    if location_state == :ship #result.is_a_ship?
       find_ship(target).hit
-      return @board.set_location(target, hit)
+      return @board.set_location(target, :hit)
     elsif location_state == empty
-      return @board.set_location(target, miss)
+      return @board.set_location(target, :miss)
     else
       return "try again, that target is #{location_state}"
     end

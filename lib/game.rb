@@ -1,16 +1,26 @@
 class Game
-  attr_accessor :won
-  def self.start
+  attr_reader :won,
+              :difficulty,
+              :players
+  def initialize
+    @difficulty = set_difficulty
+    @players = create_players(difficulty)
+    @players.each {|player| place_ships(player, difficulty)}
+  end
+  def create_players
 
-    setup
+  end
+  def place_ship(player, difficulty)
+    if difficulty == easy
+      largest_ship = 3
+    end
+  end
+  def self.start
     until won?
       won = human_player_turn
       won =computer_player_turn unless won?
     end
     #tear_down
-  end
-  def setup
-
   end
   def human_player_turn
     display_my_guesses
@@ -25,5 +35,18 @@ class Game
   end
   def won?
     won
+  end
+
+  def display_my_guesses(player)
+    @drawer.display_my_guesses(player)
+  end
+
+  def display_opponent_guesses(player)
+    @drawer.display_opponent_guesses(player)
+  end
+
+  def ask_for_guess
+    Messages.ask_for_guess
+    player.guess_location(gets.chomp.downcase)
   end
 end
