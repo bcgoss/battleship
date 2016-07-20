@@ -31,7 +31,7 @@ class Player
     if location_state == :ship #result.is_a_ship?
       find_ship(target).hit
       return @board.set_location(target, :hit)
-    elsif location_state == empty
+    elsif location_state == :empty
       return @board.set_location(target, :miss)
     else
       return "try again, that target is #{location_state}"

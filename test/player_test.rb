@@ -18,10 +18,10 @@ class PlayerTest < Minitest::Test
 
   def test_it_can_guess_locations
     player1 = Player.new
-    assert_equal "miss", player1.guess_location("a1")
+    assert_equal :miss, player1.guess_location("a1")
 
     player1.place_ship("a1","a2", 2)
-    assert_equal "hit", player1.guess_location("a2")
+    assert_equal :hit, player1.guess_location("a2")
     expect = "try again, that target is out of bounds"
     assert_equal expect, player1.guess_location("a12")
   end

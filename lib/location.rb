@@ -1,26 +1,26 @@
 class Location
   attr_reader :state
   def initialize
-    @state = "empty"
+    @state = :empty
   end
 
   def add_ship
-    @state = "ship"
+    @state = :ship
   end
 
   def ship?
-    state == "ship"
+    state == :ship
   end
 
   def empty?
-    state == "empty"
+    state == :empty
   end
 
   def record_hit
-    @state = "hit"
+    @state = :hit
   end
 
   def record_miss
-    @state = "miss"
+    @state = :miss
   end
 end

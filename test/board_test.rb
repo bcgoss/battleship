@@ -11,20 +11,20 @@ class BoardTest < Minitest::Test
 
   def test_has_locations
     board = Board.new
-    assert_equal "empty", board.check_location("a1")
+    assert_equal :empty, board.check_location("a1")
   end
   def test_more_locations
     board = Board.new
-    assert_equal "empty", board.check_location("d4")
+    assert_equal :empty, board.check_location("d4")
   end
 
   def test_it_can_be_bigger
     board = Board.new("medium")
-    assert_equal "empty", board.check_location("h8")
+    assert_equal :empty, board.check_location("h8")
   end
   def test_it_can_be_even_bigger
     board = Board.new("hard")
-    assert_equal "empty", board.check_location("L12")
+    assert_equal :empty, board.check_location("L12")
   end
 
   def test_it_handles_out_of_bounds
@@ -34,21 +34,21 @@ class BoardTest < Minitest::Test
 
   def test_it_controls_location_states
     board = Board.new
-    assert_equal "hit", board.set_location("a1", "hit")
+    assert_equal :hit, board.set_location("a1", :hit)
   end
 
   def test_it_can_spot_rows
     board = Board.new
-    assert_equal "row", board.row_or_column("a1", "a4")
+    assert_equal :row, board.row_or_column("a1", "a4")
   end
 
   def test_it_can_spot_columns
     board = Board.new
-    assert_equal "column", board.row_or_column("a1", "c1")
+    assert_equal :column, board.row_or_column("a1", "c1")
   end
 
   def test_it_spots_diagonals
-    assert_equal "neither", Board.new.row_or_column("a1", "d4")
+    assert_equal :neither, Board.new.row_or_column("a1", "d4")
   end
 
   def test_it_finds_range_of_locations
