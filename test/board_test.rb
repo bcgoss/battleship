@@ -69,6 +69,14 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_checks_length
-    assert Board.new.length?("a1","a2",2)
+    refute Board.new.wrong_length?("a1","a2",2)
+    assert Board.new.wrong_length?("a1","a2",3)
+  end
+
+  def test_it_prevents_overlapping_ships
+    board = Board.new
+    board.location["a1"].add_ship
+    assert board.occupied?(["a1"])
+    refute board.occupied?(["a2"])
   end
 end

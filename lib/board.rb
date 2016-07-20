@@ -115,21 +115,21 @@ class Board
     range = get_location_range(starting, ending)
     valid = true
     valid = false if row_or_column(starting, ending) == "neither"
-    valid = false unless length?(starting, ending, ship_size)
-    valid = false unless occupied?(range)
+    valid = false if wrong_length?(starting, ending, ship_size)
+    valid = false if occupied?(range)
     valid
   end
 
-  def length?(starting, ending, ship_size)
-    distance(starting, ending) == ship_size
+  def wrong_length?(starting, ending, ship_size)
+    distance(starting, ending) != ship_size
   end
 
   def occupied?(range)
     range.each do |target|
       if @location[target].ship?
-        return false
+        return true
       end
     end
-    true
+    false
   end
 end

@@ -1,31 +1,30 @@
+require './lib/messages'
+require './lib/game'
 class Battleship
-  def greeting
-    puts "Welcome to BATTLESHIP\n\n"
-  end
-
-  def menu
-    puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
-    response = get_menu_choice
+  def self.menu
+    puts Messages.menu_message
+    response = gets.chomp.downcase
     if response == 'p'
-      game.start
+      Game.start
     elsif response == 'i'
       information
     elsif response == 'q'
       quit
     end
-  end
-
-  def get_menu_choice
-    gets.chomp.downcase
+  response
   end
 
   def information
-
-    menu
+    puts Messages.information
   end
 
   def quit
-    puts farewell
-    return
+    puts Messages.farewell
   end
+end
+
+puts Messages.greeting
+input = nil
+until input == 'q'
+  input = Battleship.menu
 end

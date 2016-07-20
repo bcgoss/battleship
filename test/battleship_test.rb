@@ -1,5 +1,5 @@
 require './test/test_helper'
-require './lib/battleship'
+# require './lib/battleship'
 class BattleShipTest < Minitest::Test
   # def setup
   #   @battleship = Battleship.new
