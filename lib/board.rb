@@ -1,5 +1,5 @@
 require './lib/location'
-
+require './lib/messages'
 class Board
   attr_reader :size,
               :location
@@ -52,12 +52,6 @@ class Board
     coordinates.chars[1..-1].join #range from index 1, to last index. a12 => 12
   end
 
-  def get_coordinates(coordinates)
-    result =  coordinates.match(/([a-z])(\d+)/i)
-    fail(ArgumentError, "#{coordinates} don't match pattern 'a12'") if result.length != 2
-    {row: result[0], column: result[1]}
-  end
-
   def get_location_range(starting, ending)
     if row_or_column(starting, ending) == :row
       get_range_from_row(starting, ending)
@@ -84,10 +78,6 @@ class Board
     column_limits = [get_column_index(starting).to_i]
     column_limits << get_column_index(ending).to_i
 
-    if column_limits[0] == column_limits[1]
-      return starting
-    end
-
     range = (column_limits.min .. column_limits.max).map do |column|
       coordinate_builder(row,column)
     end
@@ -99,12 +89,8 @@ class Board
     row_limits = [get_row_index(starting).ord]
     row_limits << get_row_index(ending).ord
 
-    if row_limits[1] == row_limits[0]
-      return starting
-    end
-
     range = (row_limits.min .. row_limits.max).map do |row|
-      coordinate_builder((row).chr, column)
+      coordinate_builder(row.chr, column)
     end
     return range
   end
@@ -137,12 +123,15 @@ class Board
   end
 
   def guess_location(guess)
+    if check_location(guess) == "out of bounds"
+      return Messages.bad_guess(check_location(guess))
+    end
     if @location[guess].ship? #result.is_a_ship?
       return set_location(guess, :hit)
     elsif @location[guess].empty?
       return set_location(guess, :miss)
     else
-      return "bad guess: #{location_state}"
+      return Messages.bad_guess(check_location(guess))
     end
   end
 end

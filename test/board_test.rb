@@ -51,6 +51,10 @@ class BoardTest < Minitest::Test
     assert_equal :neither, Board.new.row_or_column("a1", "d4")
   end
 
+  def test_it_handles_ranges_length_one
+    assert_equal :neither, Board.new.row_or_column("a1", "a1")
+  end
+
   def test_it_finds_range_of_locations
     board = Board.new
     assert_equal ["a1","a2"], board.get_location_range("a1", "a2")

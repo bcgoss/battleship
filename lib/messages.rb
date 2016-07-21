@@ -22,4 +22,8 @@ module Messages
   def self.hit(target, status)
     "There's a ship at #{target}! It is #{status}"
   end
+
+  def self.bad_guess(status)
+    "Guess again! That location is #{status}"
+  end
 end

@@ -22,8 +22,14 @@ class PlayerTest < Minitest::Test
 
     player1.place_ship("a1","a2", 2)
     assert_equal :hit, player1.guess_location("a2")
-    expect = "try again, that target is out of bounds"
+    expect = "Guess again! That location is out of bounds"
     assert_equal expect, player1.guess_location("a12")
+  end
+
+  def test_guessing_the_same_location_twice
+    player = Player.new
+    player.guess_location("a1")
+    assert_equal "Guess again! That location is miss", player.guess_location("a1")
   end
 
   def test_players_know_if_a_ship_exists_at_location

@@ -26,9 +26,7 @@ class Player
   end
 
   def guess_location(target)
-    board_response = @board.location_guess(target)
-    # location_state = @board.check_location(target)
-
+    board_response = @board.guess_location(target)
     if board_response == :hit #result.is_a_ship?
       return find_ship(target).hit
     end
