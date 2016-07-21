@@ -15,6 +15,10 @@ module Messages
     "QUITTER"
   end
 
+  def self.difficulty
+    "Choose a difficulty setting! Enter 1 for 'Easy', 2 for 'Medium' or 3 for 'Hard':"
+  end
+
   def self.ask_for_guess
     "It's your move! Give me a target, something like 'a1'"
   end

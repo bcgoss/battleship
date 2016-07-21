@@ -17,6 +17,9 @@ class MessagesTest < Minitest::Test
     assert_equal "QUITTER", Messages.farewell
   end
 
+  def test_difficulty
+    assert_equal "Choose a difficulty setting! Enter 1 for 'Easy', 2 for 'Medium' or 3 for 'Hard':", Messages.difficulty
+  end
   def test_your_move
     assert_equal "It's your move! Give me a target, something like 'a1'", Messages.ask_for_guess
   end

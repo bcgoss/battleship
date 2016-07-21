@@ -10,6 +10,7 @@ class Board
     when :medium then 8
     when :hard then 12
     end
+    # binding.pry
     @location = set_board(size)
   end
 
