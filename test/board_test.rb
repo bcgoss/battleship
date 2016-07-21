@@ -19,11 +19,11 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_can_be_bigger
-    board = Board.new("medium")
+    board = Board.new(:medium)
     assert_equal :empty, board.check_location("h8")
   end
   def test_it_can_be_even_bigger
-    board = Board.new("hard")
+    board = Board.new(:hard)
     assert_equal :empty, board.check_location("L12")
   end
 

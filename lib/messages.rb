@@ -14,4 +14,12 @@ module Messages
   def self.farewell
     "QUITTER"
   end
+
+  def self.ask_for_guess
+    "It's your move! Give me a target, something like 'a1'"
+  end
+
+  def self.hit(target, status)
+    "There's a ship at #{target}! It is #{status}"
+  end
 end

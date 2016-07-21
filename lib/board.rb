@@ -1,12 +1,14 @@
 require './lib/location'
+
 class Board
   attr_reader :size,
               :location
-  def initialize(difficulty = "easy")
+
+  def initialize(difficulty = :easy)
     @size = case difficulty
-    when "easy" then 4
-    when "medium" then 8
-    when "hard" then 12
+    when :easy then 4
+    when :medium then 8
+    when :hard then 12
     end
     @location = set_board(size)
   end
@@ -29,6 +31,7 @@ class Board
   def coordinate_builder(row, column)
     "#{row}#{column}"
   end
+
   def check_location(target)
     target_location = @location[target.downcase]
     target_location == nil ? "out of bounds" : target_location.state
@@ -131,5 +134,15 @@ class Board
       end
     end
     false
+  end
+
+  def guess_location(guess)
+    if @location[guess].ship? #result.is_a_ship?
+      return set_location(guess, :hit)
+    elsif @location[guess].empty?
+      return set_location(guess, :miss)
+    else
+      return "bad guess: #{location_state}"
+    end
   end
 end

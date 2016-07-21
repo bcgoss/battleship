@@ -3,9 +3,9 @@ require './lib/board'
 
 class Player
   attr_reader :ships
-  def initialize(difficulty = "easy")
+  def initialize(difficulty = :easy)
     @ships = []
-    @difficulty = difficulty
+    # @difficulty = difficulty
     @board = Board.new(difficulty)
   end
 
@@ -26,15 +26,12 @@ class Player
   end
 
   def guess_location(target)
-    location_state = @board.check_location(target)
+    board_response = @board.location_guess(target)
+    # location_state = @board.check_location(target)
 
-    if location_state == :ship #result.is_a_ship?
-      find_ship(target).hit
-      return @board.set_location(target, :hit)
-    elsif location_state == :empty
-      return @board.set_location(target, :miss)
-    else
-      return "try again, that target is #{location_state}"
+    if board_response == :hit #result.is_a_ship?
+      return find_ship(target).hit
     end
+    board_response
   end
 end

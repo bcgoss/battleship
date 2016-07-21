@@ -1,8 +1,10 @@
+require './lib/drawer'
 class Game
   attr_reader :won,
               :difficulty,
               :players
   def initialize
+    @drawer = Drawer.new
     @difficulty = set_difficulty
     @players = create_players(difficulty)
     @players.each {|player| place_ships(player, difficulty)}
@@ -15,10 +17,11 @@ class Game
       largest_ship = 3
     end
   end
+
   def self.start
     until won?
       won = human_player_turn
-      won =computer_player_turn unless won?
+      won = computer_player_turn unless won?
     end
     #tear_down
   end
@@ -46,7 +49,19 @@ class Game
   end
 
   def ask_for_guess
-    Messages.ask_for_guess
-    player.guess_location(gets.chomp.downcase)
+    valid_guess = false
+    until valid_guess
+      puts Messages.ask_for_guess
+      response = player.guess_location(gets.chomp.downcase)
+      if response == :hit
+        puts Messages.hit
+        valid_guess = true
+      elsif response == :miss
+        puts Messages.miss
+        valid_guess = true
+      else
+        puts Messages.bad_guess(response)
+      end
+    end
   end
 end
