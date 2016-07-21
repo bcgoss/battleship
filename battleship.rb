@@ -10,16 +10,16 @@ class Battleship
     elsif response == 'i'
       information
     elsif response == 'q'
-      quit
+      self.quit
     end
   response
   end
 
-  def information
+  def self.information
     puts Messages.information
   end
 
-  def quit
+  def self.quit
     puts Messages.farewell
   end
 end

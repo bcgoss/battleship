@@ -102,12 +102,11 @@ class Board
   end
 
   def validate_ship_placement(starting, ending, ship_size)
+    return Messages.straight_lines(starting, ending) if row_or_column(starting, ending) == :neither
+    return Messages.wrong_length(ship_size) if wrong_length?(starting, ending, ship_size)
     range = get_location_range(starting, ending)
-    valid = true
-    valid = false if row_or_column(starting, ending) == :neither
-    valid = false if wrong_length?(starting, ending, ship_size)
-    valid = false if occupied?(range)
-    valid
+    return Messages.spot_occupied if occupied?(range)
+    true
   end
 
   def wrong_length?(starting, ending, ship_size)
@@ -125,14 +124,14 @@ class Board
 
   def guess_location(guess)
     if check_location(guess) == "out of bounds"
-      return Messages.bad_guess(check_location(guess))
+      return "out of bounds"
     end
-    if @location[guess].ship? #result.is_a_ship?
+    if @location[guess].ship?
       return set_location(guess, :hit)
     elsif @location[guess].empty?
       return set_location(guess, :miss)
     else
-      return Messages.bad_guess(check_location(guess))
+      return check_location(guess)
     end
   end
 end

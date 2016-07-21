@@ -2,7 +2,7 @@ require './lib/ship'
 require './lib/board'
 
 class Player
-  attr_reader :ships
+  attr_reader :ships, :board
   def initialize(difficulty = :easy)
     @ships = []
     # @difficulty = difficulty
@@ -10,13 +10,15 @@ class Player
   end
 
   def place_ship(starting, ending, ship_size)
-    if @board.validate_ship_placement(starting, ending, ship_size)
+    response = @board.validate_ship_placement(starting, ending, ship_size)
+    if response == true
       range = @board.get_location_range(starting, ending)
       @ships << Ship.new(range, ship_size)
       range.each do |target|
         @board.location[target].add_ship
       end
     end
+    response
   end
 
   def find_ship(target_location)
