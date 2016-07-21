@@ -12,7 +12,7 @@ module Messages
   end
 
   def self.farewell
-    "QUITTER"
+    "Thank you for playing!!"
   end
 
   def self.difficulty
@@ -55,7 +55,23 @@ module Messages
     "Guess again! That location is #{status}"
   end
 
+  def self.my_guesses
+    "Here are your guesses so far"
+  end
+
+  def self.opponent_guesses
+    "Here are your opponent's guesses so far"
+  end
+
   def self.enter
     "Press Enter to continue"
+  end
+
+  def self.your_ships
+    "Your fleet's configuration"
+  end
+
+  def self.game_over
+    "That's the last of them! GAME OVER"
   end
 end

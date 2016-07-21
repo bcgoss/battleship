@@ -23,7 +23,7 @@ class Battleship
     puts Messages.farewell
   end
 end
-
+system("clear")
 puts Messages.greeting
 input = nil
 until input == 'q'

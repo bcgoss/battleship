@@ -1,14 +1,15 @@
 require './lib/drawer'
 require './lib/ai_player'
 require './lib/human_player'
+require 'pry'
 class Game
-  attr_reader :won,
-              :difficulty,
+  attr_reader :difficulty,
               :players
   def initialize
+    system("clear")
     @difficulty = set_difficulty
     @players = create_players(difficulty)
-    @players.each {|player| place_ships(player, difficulty)}
+    hide_ships_on_opponents_board
   end
 
   def set_difficulty
@@ -26,56 +27,69 @@ class Game
     players = [HumanPlayer.new(difficulty)]
     players << AIPlayer.new(difficulty)
   end
+  def human_player
+    players[0]
+  end
+  def computer_player
+    players[1]
+  end
 
-  def place_ships(player, difficulty)
+  def hide_ships_on_opponents_board
     if difficulty == :easy
       largest_ship = 3
     elsif difficulty == :medium
       largest_ship = 4
-    else
+    elsif difficulty == :hard
       largest_ship = 5
     end
     (2..largest_ship).each do |size|
-      player.place_ship(size)
+      computer_player.place_ship(size,human_player.board)
+      human_player.place_ship(size, computer_player.board)
+      system("clear")
+      puts Drawer.draw_board(computer_player.board, :mine)
+      puts Messages.your_ships
     end
   end
 
   def start
     until won?
-      won = human_player_turn
-      won = computer_player_turn unless won?
+      human_player_turn
+      computer_player_turn unless won?
     end
-    #tear_down
-  end
-
-  def human_player_turn
-    display_my_guesses(players[1].board)
-    ask_for_guess
-    display_my_guesses(players[1].board)
-    wait_for_enter
-  end
-
-  def computer_player_turn
-    players[1].guess_location
-    display_opponent_guesses(players[0].board)
+    puts Messages.game_over
     wait_for_enter
   end
 
   def won?
-    players.each do |player|
-      player.ships.each do |ship|
-        return false if ship.size > ship.hits
+    players.any? do |player|
+      player.ships.all? do |ship|
+        ship.size <= ship.hits
       end
     end
-    true
+  end
+
+  def human_player_turn
+    display_my_guesses(human_player.board)
+    ask_for_guess
+    display_my_guesses(human_player.board)
+    wait_for_enter
+  end
+  def computer_player_turn
+    guess = computer_player.generate_a_target
+    if computer_player.guess_location(guess) == :hit
+      human_player.find_ship(guess).hit
+    end
+    display_opponent_guesses(computer_player.board)
+    wait_for_enter
   end
 
   def display_my_guesses(player)
-    Drawer.draw_board(player, :mine)
+    puts Drawer.draw_board(player, :opponent)
+    puts Messages.my_guesses
   end
-
   def display_opponent_guesses(player)
-    Drawer.draw_board(player, :opponent)
+    puts Drawer.draw_board(player, :mine)
+    puts Messages.opponent_guesses
   end
 
   def ask_for_guess
@@ -83,9 +97,10 @@ class Game
     until valid_guess
       puts Messages.ask_for_guess
       guess = gets.chomp.downcase
-      response = players[0].guess_location(guess)
-      if response == :hit || response == :sunk
-        puts Messages.hit(guess, response)
+      system "clear"
+      response = human_player.guess_location(guess)
+      if response == :hit
+        puts Messages.hit(guess, computer_player.find_ship(guess).hit)
         valid_guess = true
       elsif response == :miss
         puts Messages.miss(guess)
