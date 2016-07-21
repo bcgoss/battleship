@@ -14,19 +14,19 @@ class AIPlayer < Player
   end
   def generate_ship_placement(size, other_board)
     valid_starting_points = []
-    other_board.location.each_pair do |coordinates, status|
-      valid_starting_points << coordinates if status == :empty
+    other_board.location.each_pair do |coordinates, location|
+      valid_starting_points << coordinates if location.state == :empty
     end
     starting_point = valid_starting_points.sample
     direction = [:row, :column].sample
     if direction == :row
-       ending_point = starting_point.chars.first + (starting_point.chars[1..-1].join + size - 1)
+       ending_point = starting_point.chars.first + (starting_point.chars[1..-1].join.to_i + size - 1).to_s
     end
     if direction == :column
       ending_point = (starting_point.chars.first.ord + size - 1).chr + starting_point.chars[1..-1].join
     end
 
-    super(valid_starting_point, ending_point, size, other_board)
+    [starting_point, ending_point]
 
     # return ["a1","a2"] if size == 2
     # return ["b1", "b3"] if size == 3
